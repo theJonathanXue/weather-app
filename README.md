@@ -1,4 +1,4 @@
 # Weather App Project
-Weather app using the openweathermap api, async, await, promises, and api fetch calls.
+Weather app using the [openweathermap](https://openweathermap.org/) api, async, await, promises, and api fetch calls.
 
-Live demo: https://thejonathanxue.github.io/weather-app/
+[Live Demo](https://thejonathanxue.github.io/weather-app/) 👈
