@@ -33,7 +33,7 @@ async function cityWeather(cityName = "Toronto", country = "Canada") {
     let date = nowDate.toDateString()
     document.querySelector('.date').innerHTML=date;
     let hiLow = document.querySelector('.hi-low');
-    hiLow.innerText = `${Math.round(weatherData.main.temp_min)}°F / ${Math.round(weatherData.main.temp_max)}°F`;
+    hiLow.innerText = `${Math.round(weatherData.main.temp_min)}°C / ${Math.round(weatherData.main.temp_max)}°C`;
     displayWeather();
   } catch (err) {
     console.error(err);
