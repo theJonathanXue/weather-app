@@ -1,5 +1,5 @@
 const api = {
-  key: "79dadd3b33d816bcd23bc8a1bfb1cbd6",
+  key: "abfc92a96319d12ef70dd62c1015bde2",
   baseurl: "https://api.openweathermap.org/data/2.5/"
 }
 const searchBox = document.querySelector('.search-box');
@@ -11,77 +11,69 @@ function setQuery(evt){
   }
 }
 
+async function cityWeather(cityName = "Toronto", country = "Canada") {
+  try {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${country}&units=imperial&appid=79dadd3b33d816bcd23bc8a1bfb1cbd6`,
+      { mode: "cors" }
+    );
+    const weatherData = await response.json();
+    const weatherCityName = weatherData.name;
+    const weatherState = weatherData.sys.country;
+    const weatherLocation = weatherCityName+", "+ weatherState;
+    document.querySelector('.city').innerHTML=weatherLocation;
+    const currentTemp = Math.round(weatherData.main.temp);
+    document.querySelector('.temp').innerHTML=currentTemp+'°';
+    const weather = weatherData.weather[0].main;
+    const description = weatherData.weather[0].description;
+    let emoj = weatherEmojiMaker(weather);
+    document.querySelector('.weather').innerHTML=weather+" "+emoj;
+    weatherEmojiMaker(weather);
+    let nowDate = new Date(); 
+    let date = nowDate.toDateString()
+    document.querySelector('.date').innerHTML=date;
+    let hiLow = document.querySelector('.hi-low');
+    hiLow.innerText = `${Math.round(weatherData.main.temp_min)}°F / ${Math.round(weatherData.main.temp_max)}°F`;
+    displayWeather();
+  } catch (err) {
+    console.error(err);
+    alert("Search not found. Try again..");
+  }
+}
 
- //add state parameter to cityWeather later: , stateCode = "US"
-      async function cityWeather(cityName = "Portland", country = "USA") {
-        try {
-          const response = await fetch(
-            //add state parameter to cityWeather later: ,${stateCode}
-            `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${country}&units=imperial&appid=79dadd3b33d816bcd23bc8a1bfb1cbd6`,
-            { mode: "cors" }
-          );
-          const weatherData = await response.json();
-          
+function weatherEmojiMaker(weather){
+  if (weather == "Clouds"){
+    weatherEmoji = '☁️';
+    return weatherEmoji;
+  } else if (weather == "Clear"){
+    weatherEmoji = '☀️';
+    return weatherEmoji;
+  }
+  else if (weather == "Rain"){
+    weatherEmoji = '🌧️';
+    return weatherEmoji;
+  }
+  else if (weather == "Drizzle"){
+    weatherEmoji = '🌧️';
+    return weatherEmoji;
+  }
+  else if (weather == "Thunderstorm"){
+    weatherEmoji = '🌩️';
+    return weatherEmoji;
+  }
+  else if (weather == "Snow"){
+    weatherEmoji = '❄️';
+    return weatherEmoji;
+  }
+  else if (weather == "Fog"){
+    weatherEmoji = '🌫️';
+    return weatherEmoji;
+  }
+  else {
+    return weatherEmoji = '🌫️';
+  }
+};
 
-          const weatherCityName = weatherData.name;
-          const weatherState = weatherData.sys.country;
-          const weatherLocation = weatherCityName+", "+ weatherState;
-          
-          document.querySelector('.city').innerHTML=weatherLocation;
-          const currentTemp = Math.round(weatherData.main.temp);
-          document.querySelector('.temp').innerHTML=currentTemp+'°';
-          const weather = weatherData.weather[0].main;
-          const description = weatherData.weather[0].description;
-          let emoj = weatherEmojiMaker(weather);
-          document.querySelector('.weather').innerHTML=weather+" "+emoj;
-        weatherEmojiMaker(weather);
-          let nowDate = new Date(); 
-          let date = nowDate.toDateString()
-          document.querySelector('.date').innerHTML=date;
-          let hiLow = document.querySelector('.hi-low');
-          hiLow.innerText = `${Math.round(weatherData.main.temp_min)}°F / ${Math.round(weatherData.main.temp_max)}°F`;
-          
-          displayWeather();
-          
-} catch (err) {
-          console.error(err);
-          alert("Search not found. Try again..");
-        }
-      }
-      // cityWeather();
-      function weatherEmojiMaker(weather){
-        if (weather == "Clouds"){
-          weatherEmoji = '☁️';
-          return weatherEmoji;
-        } else if (weather == "Clear"){
-           weatherEmoji = '☀️';
-          return weatherEmoji;
-        }
-        else if (weather == "Rain"){
-           weatherEmoji = '🌧️';
-          return weatherEmoji;
-        }
-         else if (weather == "Drizzle"){
-           weatherEmoji = '🌧️';
-          return weatherEmoji;
-        }
-         else if (weather == "Thunderstorm"){
-           weatherEmoji = '🌩️';
-          return weatherEmoji;
-        }
-         else if (weather == "Snow"){
-           weatherEmoji = '❄️';
-          return weatherEmoji;
-        }
-         else if (weather == "Fog"){
-           weatherEmoji = '🌫️';
-          return weatherEmoji;
-        }
-        else{
-          return weatherEmoji = '🌫️';
-        }
-      };
-      //initial page load, run api function 
 cityWeather();
 
 function displayWeather (){
