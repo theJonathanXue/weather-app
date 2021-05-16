@@ -14,7 +14,7 @@ function setQuery(evt){
 async function cityWeather(cityName = "Toronto", country = "Canada") {
   try {
     const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${country}&units=metric&appid=79dadd3b33d816bcd23bc8a1bfb1cbd6`,
+      `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${country}&units=metric&appid=abfc92a96319d12ef70dd62c1015bde2`,
       { mode: "cors" }
     );
     const weatherData = await response.json();
